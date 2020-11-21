@@ -249,26 +249,41 @@ public class LinkedList<T> implements List<T> {
     }
 
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked" })
     public void cfrSort() {
         if (firstNode.getData().getClass() == Demographic.class) {
             Iterator<Demographic> it = (Iterator<Demographic>)this.iterator();
-            Demographic first = it.next();
+            Iterator<Demographic> it2;
+            LinkedList<Demographic> copy = new LinkedList<Demographic>();
+            while (it.hasNext()) {
+                copy.add(it.next());
+            }
+            this.clear();
+            it = copy.iterator();
+            this.add((T)it.next());
             it.remove();
-            for (int i = 1; i < size(); i++) {
-                for (int k = 0; k < size() - 1; k++) {
-                    Demographic nex = it.next();
-                    it.remove();
-                    if (first.cfr() < nex.cfr()) {
-                        Demographic temp = first;
-                        this.add((T)nex);
-                        this.add((T)temp);
+            while (!copy.isEmpty()) {
+                it = copy.iterator();
+                it2 = (Iterator<Demographic>)this.iterator();
+                Demographic insert = it.next();
+                it.remove();
+                int i = 0;
+                while (it2.hasNext()) {
+                    Demographic sort = it2.next();
+                    if (insert.cfr() > sort.cfr()) {
+                        this.add(i, (T)insert);
+                        break;
                     }
+                    else if (i == this.size() - 1) {
+                        this.add((T)insert);
+                    }
+                    i++;
                 }
             }
         }
-
     }
+
+
     /**
      * This method creates a LinkedListIterator object
      * 

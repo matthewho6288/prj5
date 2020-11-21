@@ -222,18 +222,27 @@ public class LinkedListTest extends TestCase {
         Demographic white = new Demographic("White", "Virginia", 40000, 10000);
         Demographic asian = new Demographic("Asian", "Virginia", 40000, 20000);
         Demographic black = new Demographic("Black", "Virginia", 40000, 30000);
+        Demographic black2 = new Demographic("Black2", "Virginia", 40000, 40000);
 
+        llist2.add(black2);
         llist2.add(white);
-        llist2.add(black);
         llist2.add(asian);
-        System.out.println(llist2);
-        llist2.cfrSort();
-        for (int i = 0; i < 3; i++) {
-            System.out.println(llist2.getEntry(i).getRace());
-        }
-        System.out.println(llist2);
+        llist2.add(black);
+        
+        
+        System.out.println("og: " + llist2);
         for (int i = 0; i < llist2.size(); i++) {
-            System.out.println(llist2.getEntry(i).getRace());
+            System.out.println(llist2.getEntry(i).getRace() + " " + llist2
+                .getEntry(i).cfr());
+        }
+        llist2.cfrSort();
+        // ystem.out.println(llist2);
+        System.out.println("");
+
+        System.out.println("final: " + llist2);
+        for (int i = 0; i < llist2.size(); i++) {
+            System.out.println(llist2.getEntry(i).getRace() + " " + llist2
+                .getEntry(i).cfr());
         }
     }
 

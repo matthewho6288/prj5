@@ -1,0 +1,34 @@
+package prj5;
+
+import student.TestCase;
+
+/**
+ * This class contains methods that test methods in the State class.
+ * 
+ * @author Matthew Ho (matthew00) & Baylor Lin (baylorl)
+ * @version (11.21.2020)
+ *
+ */
+public class StateTest extends TestCase {
+    private State state;
+    private LinkedList<Demographics> demoList;
+    /**
+     * This method sets up a State Object
+     */
+    public void setUp() {
+        demoList = new LinkedList<Demographics>();
+        state = new State("Virginia", demoList);
+    }
+    /**
+     * Tests the States getName() method
+     */
+     public void testGetName() {
+         assertEquals(state.getName(), "Virginia");
+     }
+     /**
+      * Tests teh States getPopulation() method
+      */
+      public void testGetPopultation() {
+          assertEquals(state.getPopulation, demoList);
+      }
+      

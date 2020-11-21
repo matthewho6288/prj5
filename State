@@ -1,0 +1,52 @@
+package prj5;
+
+/**
+ * 
+ * @author matthewho
+ *
+ */
+ public class State {
+     private String state;
+     private LinkedList<Demographics> ethnicity;
+/**
+ * This constructor creates a State object
+ *
+ * @param str
+ *    The States name
+ *
+ * @param list
+ *    The States Demographics list
+ */
+ public State(String str, LinkedList<Demographics> list){
+     state = str;
+     ethnicity = list
+ }
+/**
+ * This method obtains the States name
+ *
+ * @return the States name as a string
+ */
+ public String getName() {
+     return state;
+ }
+/**
+ * This method obtains the States demographics
+ *
+ * @return the States demographics as a list
+ */
+ public LinkedList<Demographics> getPopulation() {
+     return ethnicity;
+ }
+/**
+ * Returns the demographics of the state at a certain position
+ *
+ * @return the Demographics of the state
+ */
+ public Demographic getDemographic(String string) {
+     if (string.equals(state)){
+         for (int i = 0; i < ethnicity.size(); i++) {
+             ethnicity.getEntry(i);
+         }
+     }
+ }
+ }

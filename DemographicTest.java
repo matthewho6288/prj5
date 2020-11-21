@@ -5,7 +5,7 @@ import student.TestCase;
 /**
  * This class contains methods that test methods in the Demographic class.
  * 
- * @author Matthew Ho (matthew00) & Baylor Lin (Baylorl)
+ * @author Matthew Ho (matthew00) & Baylor Lin (baylorl)
  * @version (11.21.2020)
  *
  */

@@ -1,9 +1,11 @@
 package prj5;
 
 /**
+ * This class constructs Demographic objects methods that obtain their field
+ * data and compares objects to eachother.
  * 
- * @author matthewho
- *
+ * @author Matthew Ho (matthew00) & Baylor Lin (baylorl)
+ * @version (11.21.2020)
  */
 public class Demographic {
     private String race;

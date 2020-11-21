@@ -3,7 +3,7 @@ package prj5;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedList<T> implements List<T>{
+public class LinkedList<T> implements List<T> {
     private LinkedList<T> currList = this;
     private Node<T> firstNode;
     private int numberOfEntries;
@@ -40,19 +40,18 @@ public class LinkedList<T> implements List<T>{
             throw new IllegalArgumentException("newEntry is null");
         }
         Node<T> current = firstNode;
-        // empty list case
         if (isEmpty()) {
             firstNode = new Node<T>(newEntry);
         }
-        // other cases
         else {
             while (current.next != null) {
                 current = current.next;
             }
             current.setNextNode(new Node<T>(newEntry));
-        }
+        } 
         numberOfEntries++;
     }
+
 
     /**
      * This method adds an object a specific position.
@@ -68,7 +67,7 @@ public class LinkedList<T> implements List<T>{
         if (newEntry == null) {
             throw new IllegalArgumentException("newEntry is null");
         }
-        if (!inBounds(newPosition)) {
+        if (newPosition != 0 && !inBounds(newPosition)) {
             throw new IndexOutOfBoundsException("newPosition is out of bounds");
         }
         if (isEmpty()) {
@@ -83,17 +82,18 @@ public class LinkedList<T> implements List<T>{
             else {
                 Node<T> newNode = new Node<T>(newEntry);
                 Node<T> prevNode = firstNode;
-                Node<T> nextNode = null;
+                Node<T> nextNode = prevNode.next;
                 for (int i = 0; i < newPosition - 1; i++) {
                     prevNode = prevNode.next;
-                    nextNode = prevNode.next;                    
-                }       
+                    nextNode = prevNode.next;
+                }
                 newNode.setNextNode(nextNode);
                 prevNode.setNextNode(newNode);
             }
             numberOfEntries++;
         }
     }
+
 
     /**
      * Gets the last time the given object is in the list
@@ -103,14 +103,17 @@ public class LinkedList<T> implements List<T>{
      * @return the last position of it. -1 If it is not in the list
      */
     public int firstIndexOf(T listEntry) {
-        Node<T>  current = firstNode;
+        Node<T> current = firstNode;
         for (int i = 0; i < size(); i++) {
             if (current.getData().equals(listEntry)) {
                 return i;
             }
+            current = current.next;
         }
         return -1;
     }
+
+
     /**
      * This method removes an object at a given position.
      * 
@@ -120,7 +123,7 @@ public class LinkedList<T> implements List<T>{
      */
     @Override
     public boolean remove(int givenPosition) {
-        if (!inBounds(givenPosition) || firstNode == null) {
+        if (!inBounds(givenPosition)) {
             throw new IndexOutOfBoundsException(
                 "givenPosition is out of bounds");
         }
@@ -139,6 +142,7 @@ public class LinkedList<T> implements List<T>{
                 nextNode = nextNode.next;
             }
             prevNode.setNextNode(nextNode);
+            numberOfEntries--;
             return true;
         }
     }
@@ -153,7 +157,7 @@ public class LinkedList<T> implements List<T>{
      *         less than the size of the list
      */
     private boolean inBounds(int index) {
-        return !(isEmpty() || index < 0 || index >= size());
+        return !(index < 0 || index >= size());
     }
 
 
@@ -170,7 +174,7 @@ public class LinkedList<T> implements List<T>{
     @Override
     public void replace(int givenPosition, T newEntry) {
         add(givenPosition, newEntry);
-        remove(givenPosition - 1);
+        remove(givenPosition + 1);
     }
 
 
@@ -196,7 +200,8 @@ public class LinkedList<T> implements List<T>{
         // check if the data was null...
         if (data == null) {
             // ... if so throw an exception
-            throw new IndexOutOfBoundsException("newPosition exceeds the size.");
+            throw new IndexOutOfBoundsException(
+                "newPosition exceeds the size.");
         }
         return data;
     }
@@ -242,14 +247,41 @@ public class LinkedList<T> implements List<T>{
         str += "}";
         return str;
     }
-    
-    public Iterator<T> iteraotr() {
+
+
+    @SuppressWarnings("unchecked")
+    public void cfrSort() {
+        if (firstNode.getData().getClass() == Demographic.class) {
+            Iterator<Demographic> it = (Iterator<Demographic>)this.iterator();
+            Demographic first = it.next();
+            it.remove();
+            for (int i = 1; i < size(); i++) {
+                for (int k = 0; k < size() - 1; k++) {
+                    Demographic nex = it.next();
+                    it.remove();
+                    if (first.cfr() < nex.cfr()) {
+                        Demographic temp = first;
+                        this.add((T)nex);
+                        this.add((T)temp);
+                    }
+                }
+            }
+        }
+
+    }
+    /**
+     * This method creates a LinkedListIterator object
+     * 
+     * @return a LinkedListIterator object
+     */
+    public Iterator<T> iterator() {
         return new LinkedListIterator<T>();
     }
-    
+
     private class LinkedListIterator<A> implements Iterator<T> {
-        private Node<T> head = firstNode.next;
+        private Node<T> head = firstNode;
         private Node<T> nextNode = null;
+        private Node<T> deletedNode = null;
         private boolean wasNextCalled = false;
 
         public LinkedListIterator() {
@@ -259,7 +291,7 @@ public class LinkedList<T> implements List<T>{
 
         @Override
         public boolean hasNext() {
-            return nextNode.getData() != null;
+            return nextNode != null;
         }
 
 
@@ -268,6 +300,7 @@ public class LinkedList<T> implements List<T>{
             if (hasNext()) {
                 wasNextCalled = true;
                 Node<T> returnNode = nextNode;
+                deletedNode = returnNode;
                 nextNode = nextNode.next;
                 return returnNode.getData();
             }
@@ -279,8 +312,9 @@ public class LinkedList<T> implements List<T>{
 
         public void remove() {
             if (wasNextCalled) {
-                currList.remove(currList.firstIndexOf(nextNode.next.getData()));
+                currList.remove(currList.firstIndexOf(deletedNode.data));
                 wasNextCalled = false;
+                deletedNode = null;
             }
             else {
                 throw new IllegalStateException(
@@ -288,6 +322,8 @@ public class LinkedList<T> implements List<T>{
             }
         }
     }
+
+
     private class Node<E> {
         private E data;
         private Node<E> next;

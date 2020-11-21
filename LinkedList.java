@@ -1,8 +1,11 @@
 package prj5;
 
-public class LinkedList<T> implements List<T>{
-    private Node<T> firstNode;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
+public class LinkedList<T> implements List<T>{
+    private LinkedList<T> currList = this;
+    private Node<T> firstNode;
     private int numberOfEntries;
 
     /**
@@ -92,7 +95,22 @@ public class LinkedList<T> implements List<T>{
         }
     }
 
-
+    /**
+     * Gets the last time the given object is in the list
+     *
+     * @param obj
+     *            the object to look for
+     * @return the last position of it. -1 If it is not in the list
+     */
+    public int firstIndexOf(T listEntry) {
+        Node<T>  current = firstNode;
+        for (int i = 0; i < size(); i++) {
+            if (current.getData().equals(listEntry)) {
+                return i;
+            }
+        }
+        return -1;
+    }
     /**
      * This method removes an object at a given position.
      * 
@@ -126,6 +144,14 @@ public class LinkedList<T> implements List<T>{
     }
 
 
+    /**
+     * This method determines if index is within the bounds of the list.
+     * 
+     * @param index
+     *            an integer representing the index
+     * @return true if the list is not empty and the index is greater than 0 and
+     *         less than the size of the list
+     */
     private boolean inBounds(int index) {
         return !(isEmpty() || index < 0 || index >= size());
     }
@@ -216,20 +242,59 @@ public class LinkedList<T> implements List<T>{
         str += "}";
         return str;
     }
+    
+    public Iterator<T> iteraotr() {
+        return new LinkedListIterator<T>();
+    }
+    
+    private class LinkedListIterator<A> implements Iterator<T> {
+        private Node<T> head = firstNode.next;
+        private Node<T> nextNode = null;
+        private boolean wasNextCalled = false;
 
-    public class Node<E> {
+        public LinkedListIterator() {
+            nextNode = head;
+        }
+
+
+        @Override
+        public boolean hasNext() {
+            return nextNode.getData() != null;
+        }
+
+
+        @Override
+        public T next() {
+            if (hasNext()) {
+                wasNextCalled = true;
+                Node<T> returnNode = nextNode;
+                nextNode = nextNode.next;
+                return returnNode.getData();
+            }
+            else {
+                throw new NoSuchElementException("Illegal call to next()");
+            }
+        }
+
+
+        public void remove() {
+            if (wasNextCalled) {
+                currList.remove(currList.firstIndexOf(nextNode.next.getData()));
+                wasNextCalled = false;
+            }
+            else {
+                throw new IllegalStateException(
+                    "Illegal call to remove() next() was not call.");
+            }
+        }
+    }
+    private class Node<E> {
         private E data;
         private Node<E> next;
 
         public Node(E data) {
             this.data = data;
             next = null;
-        }
-
-
-        public Node(E data, Node<E> node) {
-            this.data = data;
-            next = node;
         }
 
 

@@ -87,4 +87,24 @@ public class Demographic {
             * 100;
     }
 
+
+    /**
+     * This method compares "this" Demographic to another object
+     * 
+     * @param obj
+     *            object that "this" is being compared to
+     * 
+     * @return true if all traits of both Demographic objects are the same
+     */
+    public boolean equals(Object obj) {
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        else {
+            Demographic group = (Demographic)obj;
+            return (this.race == group.race && this.state == group.state
+                && this.confirmedCases == group.confirmedCases
+                && this.deathToll == group.deathToll);
+        }
+    }
 }

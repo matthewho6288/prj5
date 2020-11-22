@@ -18,7 +18,7 @@ public class FileReader {
      */
     public FileReader(String file) {
         states = new States[file.length];
-        
+        readFile(file);
     }
     /**
      * Helper method to read the file

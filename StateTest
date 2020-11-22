@@ -29,6 +29,11 @@ public class StateTest extends TestCase {
       * Tests teh States getPopulation() method
       */
       public void testGetPopultation() {
-          assertEquals(state.getPopulation, demoList);
+          Demographics demo = new Demographics("asian", "Virginia", 12, 13);
+          demoList.addEntry(demo);
+          assertEquals(demoList.getPopulation().getRace(), "asian");
+          assertEquals(demoList.getPopulation().getState(), "Virginia");
+          assertEquals(demoList.getPopulation().getConfirmedCases(), 12);
+          assertEquals(demoList.getPopultation().getDeathToll(), 13);
       }
       

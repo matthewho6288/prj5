@@ -232,31 +232,28 @@ public class LinkedListTest extends TestCase {
         llist2.add(asian2);
         
         
-        System.out.println("og: " + llist2);
-        for (int i = 0; i < llist2.size(); i++) {
-            System.out.println(llist2.getEntry(i).getRace() + " " + llist2
-                .getEntry(i).cfr());
-        }
         llist2.cfrSort();
         // ystem.out.println(llist2);
         System.out.println("");
 
         System.out.println("cfr final: " + llist2);
         for (int i = 0; i < llist2.size(); i++) {
-            System.out.println(llist2.getEntry(i).getRace() + " " + llist2
-                .getEntry(i).cfr());
+            assertTrue(llist2.getEntry(i).cfr() > llist2.getEntry(i + 1).cfr());
         }
         
         System.out.println();
         llist2.alphaSort();
         
-        
         System.out.println("alpha final: " + llist2);
         for (int i = 0; i < llist2.size(); i++) {
-            System.out.println(llist2.getEntry(i).getRace() + " " + llist2
-                .getEntry(i).cfr());
+            if(llist2.getEntry(i).getRace().toCharArray()[0] < llist.getEntry(i + 1).getRace().toCharArray()[0]) {
+                assertTrue(llist2.getEntry(i).getRace().toCharArray()[0] < llist.getEntry(i + 1).getRace().toCharArray()[0]);   
+            }
+            
         }
         
     }
+    
+    
 
 }

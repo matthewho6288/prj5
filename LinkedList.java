@@ -275,9 +275,15 @@ public class LinkedList<T> implements List<T> {
                         break;
                     }
                     else if (insert.cfr() == sort.cfr()) {
-                        this.add(i, (T)insert);
-                        this.add(i, (T)sort);
-                        break; 
+                        if (insert.getRace().toCharArray()[0] < sort.getRace()
+                            .toCharArray()[0]) {
+                            this.add(i, (T)insert);
+
+                        }
+                        else {
+                            this.add(i + 1, (T)insert);
+                        }
+                        break;
                     }
                     else if (i == this.size() - 1) {
                         this.add((T)insert);
@@ -287,10 +293,11 @@ public class LinkedList<T> implements List<T> {
             }
         }
     }
+
     /**
      * Sort Alphabetically
      */
-     @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings({ "unchecked" })
     public void alphaSort() {
         if (firstNode.getData().getClass() == Demographic.class) {
             Iterator<Demographic> it = (Iterator<Demographic>)this.iterator();
@@ -311,16 +318,10 @@ public class LinkedList<T> implements List<T> {
                 int i = 0;
                 while (it2.hasNext()) {
                     Demographic sort = it2.next();
-                    if (insert.getRace().compareTo(sort.getRace()) == 1) {
+                    if (insert.getRace().toCharArray()[0] < sort.getRace()
+                        .toCharArray()[0]) {
                         this.add(i, (T)insert);
                         break;
-                    }
-                    else if (insert.getRace().compareTo(sort.getRace()) == -1) {
-                        this.add(i, (T)sort);
-                        break; 
-                    }
-                    else if (inser.getRace().compareTo(sort.getRace()) == 0){
-                           
                     }
                     else if (i == this.size() - 1) {
                         this.add((T)insert);
@@ -329,6 +330,7 @@ public class LinkedList<T> implements List<T> {
                 }
             }
         }
+
     }
 
 

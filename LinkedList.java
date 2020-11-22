@@ -274,6 +274,54 @@ public class LinkedList<T> implements List<T> {
                         this.add(i, (T)insert);
                         break;
                     }
+                    else if (insert.cfr() == sort.cfr()) {
+                        this.add(i, (T)insert);
+                        this.add(i, (T)sort);
+                        break; 
+                    }
+                    else if (i == this.size() - 1) {
+                        this.add((T)insert);
+                    }
+                    i++;
+                }
+            }
+        }
+    }
+    /**
+     * Sort Alphabetically
+     */
+     @SuppressWarnings({ "unchecked" })
+    public void alphaSort() {
+        if (firstNode.getData().getClass() == Demographic.class) {
+            Iterator<Demographic> it = (Iterator<Demographic>)this.iterator();
+            Iterator<Demographic> it2;
+            LinkedList<Demographic> copy = new LinkedList<Demographic>();
+            while (it.hasNext()) {
+                copy.add(it.next());
+            }
+            this.clear();
+            it = copy.iterator();
+            this.add((T)it.next());
+            it.remove();
+            while (!copy.isEmpty()) {
+                it = copy.iterator();
+                it2 = (Iterator<Demographic>)this.iterator();
+                Demographic insert = it.next();
+                it.remove();
+                int i = 0;
+                while (it2.hasNext()) {
+                    Demographic sort = it2.next();
+                    if (insert.getRace().compareTo(sort.getRace()) == 1) {
+                        this.add(i, (T)insert);
+                        break;
+                    }
+                    else if (insert.getRace().compareTo(sort.getRace()) == -1) {
+                        this.add(i, (T)sort);
+                        break; 
+                    }
+                    else if (inser.getRace().compareTo(sort.getRace()) == 0){
+                           
+                    }
                     else if (i == this.size() - 1) {
                         this.add((T)insert);
                     }

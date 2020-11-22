@@ -43,10 +43,19 @@ package prj5;
  * @return the Demographics of the state
  */
  public Demographic getDemographic(String string) {
+ String race = "";
+ String location = "";
+ int confirmed = 0;
+ int death = 0;
      if (string.equals(state)){
          for (int i = 0; i < ethnicity.size(); i++) {
-             ethnicity.getEntry(i);
+             race = ethnicity.getEntry(i).getRace();
+             location = ethnicity.getEntry(i).getState();
+             confirmed = ethnicity.getEntry(i).getConfirmedCases();
+             death = ethnicity.getEntry(i).getDeathToll();
          }
      }
+     Demographics demo = new Demographics(race, location, confirmed, death);
+     return demo;
  }
  }

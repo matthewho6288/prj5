@@ -1,0 +1,34 @@
+package prj5;
+
+import java.FileReader;
+import java.File;
+
+/**
+ * This class constructs FileReader objects methods that obtain their field
+ * data and compares objects to eachother.
+ * 
+ * @author Matthew Ho (matthew00) & Baylor Lin (baylorl)
+ * @version (11.21.2020)
+ */
+public class FileReader {
+    private States[] states;
+    
+    /**
+     * FileReader Constructor
+     */
+    public FileReader(String file) {
+        states = new States[file.length];
+        readFile(file);
+    }
+    /**
+     * Helper method to read the file
+     * @param file is the file to read
+     */
+    private States[] readFile(String file) {
+        FileReader reader = new FileReader(file);
+        int i; 
+        while ((i = reader.read()) != -1) {
+            states.addEntry(i);
+        }
+    }
+}

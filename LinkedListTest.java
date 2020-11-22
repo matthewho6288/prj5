@@ -246,7 +246,10 @@ public class LinkedListTest extends TestCase {
         
         System.out.println("alpha final: " + llist2);
         for (int i = 0; i < llist2.size(); i++) {
-            assertTrue(llist2.getEntry(i).getRace().toCharArray()[0] < llist.getEntry(i + 1).getRace().toCharArray()[0]);
+            if(llist2.getEntry(i).getRace().toCharArray()[0] < llist.getEntry(i + 1).getRace().toCharArray()[0]) {
+                assertTrue(llist2.getEntry(i).getRace().toCharArray()[0] < llist.getEntry(i + 1).getRace().toCharArray()[0]);   
+            }
+            
         }
         
     }

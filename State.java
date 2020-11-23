@@ -1,12 +1,13 @@
 package prj5;
 
 /**
+ * This class creates state objects and methods.
  * 
- * @author matthewho
- *
+ * @author Matthew Ho (matthew00)
+ * @version (11.20.2020)
  */
 public class State {
-    private String state;
+    private String homeState;
     private LinkedList<Demographic> ethnicity;
 
     /**
@@ -16,10 +17,10 @@ public class State {
      *            The States name
      *
      * @param list
-     *            The States Demographics list
+     *            A linkedList of Demographic
      */
     public State(String str, LinkedList<Demographic> list) {
-        state = str;
+        homeState = str;
         ethnicity = list;
     }
 
@@ -30,7 +31,7 @@ public class State {
      * @return the States name as a string
      */
     public String getName() {
-        return state;
+        return homeState;
     }
 
 

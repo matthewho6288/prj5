@@ -3,13 +3,21 @@ package prj5;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * This class creates LinkedList objects and methods for those objects. There
+ * are also inner classes for iterator objects and node objects.
+ * 
+ * @author Matthew Ho (matthew00)
+ * @version (11.20.2020)
+ * @param <T>
+ */
 public class LinkedList<T> implements List<T> {
     private LinkedList<T> currList = this;
     private Node<T> firstNode;
     private int numberOfEntries;
 
     /**
-     * 
+     * This creates a LinkedList object and sets its initial fields.
      */
     public LinkedList() {
         firstNode = null;
@@ -48,7 +56,7 @@ public class LinkedList<T> implements List<T> {
                 current = current.next;
             }
             current.setNextNode(new Node<T>(newEntry));
-        } 
+        }
         numberOfEntries++;
     }
 
@@ -98,7 +106,7 @@ public class LinkedList<T> implements List<T> {
     /**
      * Gets the last time the given object is in the list
      *
-     * @param obj
+     * @param listEntry
      *            the object to look for
      * @return the last position of it. -1 If it is not in the list
      */
@@ -197,9 +205,7 @@ public class LinkedList<T> implements List<T> {
             currentnewPosition++;
             current = current.next;
         }
-        // check if the data was null...
         if (data == null) {
-            // ... if so throw an exception
             throw new IndexOutOfBoundsException(
                 "newPosition exceeds the size.");
         }
@@ -249,6 +255,10 @@ public class LinkedList<T> implements List<T> {
     }
 
 
+    /**
+     * This method sorts the LinkedList of Demographic objects by largest CFR
+     * ratio to lowest CFR ratio.
+     */
     @SuppressWarnings({ "unchecked" })
     public void cfrSort() {
         if (firstNode.getData().getClass() == Demographic.class) {
@@ -258,6 +268,8 @@ public class LinkedList<T> implements List<T> {
             while (it.hasNext()) {
                 copy.add(it.next());
             }
+            copy.alphaSort();
+            copy.reverse();
             this.clear();
             it = copy.iterator();
             this.add((T)it.next());
@@ -275,17 +287,10 @@ public class LinkedList<T> implements List<T> {
                         break;
                     }
                     else if (insert.cfr() == sort.cfr()) {
-                        if (insert.getRace().toCharArray()[0] < sort.getRace()
-                            .toCharArray()[0]) {
-                            this.add(i, (T)insert);
-
-                        }
-                        else {
-                            this.add(i + 1, (T)insert);
-                        }
+                        this.add(i, (T)insert);
                         break;
                     }
-                    else if (i == this.size() - 1) {
+                    else if (i == size() - 1) {
                         this.add((T)insert);
                     }
                     i++;
@@ -296,7 +301,23 @@ public class LinkedList<T> implements List<T> {
 
 
     /**
-     * Sort Alphabetically
+     * This method reverses the order of a LinkedList.
+     */
+    public void reverse() {
+        T copy;
+        int size = this.size() - 1;
+        for (int i = size; i >= 0; i--) {
+            copy = this.getEntry(i);
+            this.add(copy);
+        }
+        for (int i = 0; i <= size; i++) {
+            this.remove(0);
+        }
+    }
+
+
+    /**
+     * This method sorts the LinkedList of Demographic objects alphabetically.
      */
     @SuppressWarnings({ "unchecked" })
     public void alphaSort() {
@@ -331,7 +352,6 @@ public class LinkedList<T> implements List<T> {
                 }
             }
         }
-
     }
 
 
@@ -344,23 +364,46 @@ public class LinkedList<T> implements List<T> {
         return new LinkedListIterator<T>();
     }
 
+    /**
+     * This inner class provides the constructor and methods for an Iterator
+     * object.
+     * 
+     * @author Matthew Ho (matthew00)
+     * @version (11.20.2020)
+     * @param <A>
+     *            the type of the LinkedList
+     */
     private class LinkedListIterator<A> implements Iterator<T> {
         private Node<T> head = firstNode;
         private Node<T> nextNode = null;
         private Node<T> deletedNode = null;
         private boolean wasNextCalled = false;
 
+        /**
+         * This creates a LinkedListIterator object and sets the head field.
+         */
         public LinkedListIterator() {
             nextNode = head;
         }
 
 
+        /**
+         * This method makes sure that the iterator has another object to call
+         * next.
+         * 
+         * @return true if the iterator has more items to iterate through.
+         */
         @Override
         public boolean hasNext() {
             return nextNode != null;
         }
 
 
+        /**
+         * This method iterates the next object
+         * 
+         * @return the object the iterate traverses to.
+         */
         @Override
         public T next() {
             if (hasNext()) {
@@ -376,6 +419,11 @@ public class LinkedList<T> implements List<T> {
         }
 
 
+        /**
+         * This method removes an item from the LinkedList
+         * 
+         * @throws IllegalStateException
+         */
         public void remove() {
             if (wasNextCalled) {
                 currList.remove(currList.firstIndexOf(deletedNode.data));
@@ -390,26 +438,56 @@ public class LinkedList<T> implements List<T> {
     }
 
 
+    /**
+     * This inner class provides the constructor and methods for Node objects
+     * 
+     * @author Matthew Ho (matthew00)
+     * @version (11.20.2020)
+     *
+     * @param <E>
+     *            This is the type of the data contained in the node
+     */
     private class Node<E> {
         private E data;
         private Node<E> next;
 
+        /**
+         * This creates a node and sets up its initial fields
+         * 
+         * @param data
+         */
         public Node(E data) {
             this.data = data;
             next = null;
         }
 
 
+        /**
+         * This obtains the next node of "this" node.
+         * 
+         * @return the next node
+         */
         public Node<E> getNextNode() {
             return next;
         }
 
 
+        /**
+         * This obtains the data contained within the node.
+         * 
+         * @return
+         */
         public E getData() {
             return data;
         }
 
 
+        /**
+         * This sets the next node of "this" node.
+         * 
+         * @param node
+         *            the next node
+         */
         public void setNextNode(Node<E> node) {
             next = node;
         }

@@ -1,5 +1,14 @@
 package prj5;
 
+/**
+ * This interface contains methods for List objects
+ * 
+ * @author Matthew Ho (matthew00)
+ * @version (11.20.2020)
+ *
+ * @param <T>
+ *            The type of the objects stored in the List
+ */
 public interface List<T> {
     /**
      * This obtains the amount of elements in the list.
@@ -36,6 +45,7 @@ public interface List<T> {
      * @param givenPosition
      *            an integer representing the position of the object to be
      *            removed
+     * @return true if the item was removed
      */
     public boolean remove(int givenPosition);
 
@@ -59,6 +69,7 @@ public interface List<T> {
      * @param givenPosition
      *            an integer representing the position of the entry that will be
      *            obtained
+     * @return the object in the List at the given position
      */
     public T getEntry(int givenPosition);
 

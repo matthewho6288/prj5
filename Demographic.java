@@ -10,8 +10,8 @@ package prj5;
 public class Demographic {
     private String race;
     private String state;
-    private int confirmedCases;
-    private int deathToll;
+    private String confirmedCases;
+    private String deathToll;
 
     /**
      * This constructor creates a Demographic object.
@@ -28,8 +28,8 @@ public class Demographic {
     public Demographic(
         String ethinicity,
         String location,
-        int cases,
-        int deaths) {
+        String cases,
+        String deaths) {
         race = ethinicity;
         state = location;
         confirmedCases = cases;
@@ -62,7 +62,7 @@ public class Demographic {
      * 
      * @return The demographic's amount of COVID cases
      */
-    public int getConfirmedCases() {
+    public String getConfirmedCases() {
         return confirmedCases;
     }
 
@@ -72,7 +72,7 @@ public class Demographic {
      * 
      * @return Number of COVID deaths
      */
-    public int getDeathToll() {
+    public String getDeathToll() {
         return deathToll;
     }
 
@@ -85,8 +85,10 @@ public class Demographic {
      * @return CFR ratio as percentage
      */
     public double cfr() {
-        return (Double.valueOf(deathToll) / Double.valueOf(confirmedCases))
-            * 100;
+        if (confirmedCases.equals("-1") || deathToll.equals("-1")) {
+            return -1;
+        }
+        return 100 * Double.valueOf(deathToll) / Double.valueOf(confirmedCases);
     }
 
 

@@ -4,13 +4,26 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import student.TestCase;
 
+/**
+ * This class tests the methods in the LinkedList class.
+ * 
+ * @author Matthew Ho (matthew00)
+ * @version (11.20.2020)
+ */
 public class LinkedListTest extends TestCase {
     private LinkedList<String> llist;
+
+    /**
+     * This sets up a LinkedList of Strings
+     */
     public void setUp() {
         llist = new LinkedList<String>();
     }
 
 
+    /**
+     * This tests the size() method.
+     */
     public void testSize() {
         assertEquals(0, llist.size());
         assertTrue(llist.isEmpty());
@@ -47,11 +60,18 @@ public class LinkedListTest extends TestCase {
         assertEquals("{entry3, entry3, entry4, entry1, entry2, newEntry}", llist
             .toString());
         assertEquals(6, llist.size());
+        llist.add(5, "entry4");
+        assertEquals(
+            "{entry3, entry3, entry4, entry1, entry2, entry4, newEntry}", llist
+                .toString());
         llist.clear();
         assertTrue(llist.isEmpty());
     }
 
 
+    /**
+     * This method tests the firstIndexOf() method.
+     */
     public void testFirstIndexOf() {
         llist.add("entry1");
         assertEquals(0, llist.firstIndexOf("entry1"));
@@ -59,6 +79,9 @@ public class LinkedListTest extends TestCase {
     }
 
 
+    /**
+     * This tests the add() methods for their exceptions.
+     */
     public void testAddExceptions() {
         //
         String strNull = null;
@@ -95,6 +118,9 @@ public class LinkedListTest extends TestCase {
     }
 
 
+    /**
+     * This tests the remove() method.
+     */
     public void testRemove() {
         llist.add("entry1");
         llist.add("entry2");
@@ -107,6 +133,9 @@ public class LinkedListTest extends TestCase {
     }
 
 
+    /**
+     * This tests the replace() method.
+     */
     public void testReplace() {
         llist.add("entry1");
         llist.add("entry2");
@@ -116,8 +145,10 @@ public class LinkedListTest extends TestCase {
     }
 
 
+    /**
+     * This tests the remove() method for its exceptions.
+     */
     public void testRemoveExceptions() {
-        //
         Exception exception = null;
         try {
             llist.remove(-1);
@@ -137,9 +168,12 @@ public class LinkedListTest extends TestCase {
         }
         assertNotNull(exception);
         assertTrue(exception instanceof IndexOutOfBoundsException);
-        
     }
 
+
+    /**
+     * This tests the getEntry() method for its exceptions.
+     */
     public void testGetEntryException() {
         Exception exception = null;
         try {
@@ -152,7 +186,10 @@ public class LinkedListTest extends TestCase {
         assertTrue(exception instanceof IndexOutOfBoundsException);
     }
 
-    
+
+    /**
+     * This tests the iterator methods hasNext() and next().
+     */
     public void testIterator() {
         llist.add("entry1");
         llist.add("entry2");
@@ -166,7 +203,11 @@ public class LinkedListTest extends TestCase {
         assertEquals("entry4", it.next());
         assertFalse(it.hasNext());
     }
-    
+
+
+    /**
+     * This tests the remove() method of the iterator.
+     */
     public void testIteratorRemove() {
         llist.add("entry1");
         llist.add("entry2");
@@ -185,11 +226,13 @@ public class LinkedListTest extends TestCase {
         assertEquals("entry3", it.next());
         it.remove();
         assertEquals("{entry4}", llist.toString());
-        
-        
+
     }
 
 
+    /**
+     * This tests the Iterator methods for exceptions.
+     */
     public void testIteratorException() {
         llist.add("entry1");
         Iterator<String> it = llist.iterator();
@@ -214,46 +257,84 @@ public class LinkedListTest extends TestCase {
         assertNotNull(exception);
         assertTrue(exception instanceof IllegalStateException);
     }
-    
-    
-    public void testCfrSort() {
-        llist.add("q");
-        LinkedList<Demographic> llist2 = new LinkedList<Demographic>();
-        Demographic white = new Demographic("White", "Virginia", 40000, 10000);
-        Demographic asian = new Demographic("Asian", "Virginia", 40000, 20000);
-        Demographic black = new Demographic("Black", "Virginia", 40000, 30000);
-        Demographic black2 = new Demographic("Black2", "Virginia", 40000, 40000);
-        Demographic asian2 = new Demographic("Asian", "Virginia", 40000, 10000);
 
+
+    /**
+     * This tests the sort methods and the reverse() method.
+     */
+    public void testSort() {
+        llist.add("q");
+        llist.add("3");
+        assertEquals("{q, 3}", llist.toString());
+        llist.cfrSort();
+        assertEquals("{q, 3}", llist.toString());
+        llist.alphaSort();
+        assertEquals("{q, 3}", llist.toString());
+        LinkedList<Demographic> llist2 = new LinkedList<Demographic>();
+        Demographic white = new Demographic("White", "Virginia", "40000",
+            "10000");
+        Demographic asian = new Demographic("Asian", "Virginia", "40000",
+            "20000");
+        Demographic black = new Demographic("Black", "Virginia", "40000",
+            "30000");
+        Demographic black2 = new Demographic("Black2", "Virginia", "40000",
+            "40000");
+        Demographic asian2 = new Demographic("Asian", "Virginia", "40000",
+            "10000");
         llist2.add(black2);
         llist2.add(white);
         llist2.add(asian);
         llist2.add(black);
         llist2.add(asian2);
-        
-        
         llist2.cfrSort();
-        // ystem.out.println(llist2);
-        System.out.println("");
-
-        System.out.println("cfr final: " + llist2);
+        String[] sorted = { "Black2", "Black", "Asian", "Asian", "White" };
         for (int i = 0; i < llist2.size(); i++) {
-            assertTrue(llist2.getEntry(i).cfr() > llist2.getEntry(i + 1).cfr());
+            assertEquals(sorted[i], llist2.getEntry(i).getRace());
         }
-        
-        System.out.println();
+        llist2.remove(0);
+        llist2.remove(2);
+        String[] sorted2 = { "Asian", "Black", "White" };
         llist2.alphaSort();
-        
-        System.out.println("alpha final: " + llist2);
         for (int i = 0; i < llist2.size(); i++) {
-            if(llist2.getEntry(i).getRace().toCharArray()[0] < llist.getEntry(i + 1).getRace().toCharArray()[0]) {
-                assertTrue(llist2.getEntry(i).getRace().toCharArray()[0] < llist.getEntry(i + 1).getRace().toCharArray()[0]);   
-            }
-            
+            assertEquals(sorted2[i], llist2.getEntry(i).getRace());
         }
-        
-    }
-    
-    
+        Demographic asian3 = new Demographic("Asian", "Virginia", "40000",
+            "10000");
+        Demographic black3 = new Demographic("Black", "Virginia", "40000",
+            "10000");
+        Demographic latino = new Demographic("Latino", "Virginia", "40000",
+            "10000");
+        llist2.clear();
+        llist2.add(white);
+        llist2.add(latino);
+        llist2.add(black3);
+        llist2.add(asian3);
 
+        llist2.cfrSort();
+        String[] sorted3 = { "Asian", "Black", "Latino", "White" };
+        for (int i = 0; i < llist2.size(); i++) {
+            assertEquals(sorted3[i], llist2.getEntry(i).getRace());
+        }
+        llist2.clear();
+        llist2.add(asian3);
+        llist2.add(black3);
+        llist2.add(latino);
+        llist2.add(white);
+        llist2.cfrSort();
+        for (int i = 0; i < llist2.size(); i++) {
+            assertEquals(sorted3[i], llist2.getEntry(i).getRace());
+        }
+        llist2.clear();
+        Demographic asian4 = new Demographic("Asian", "Virginia", "40000",
+            "1000");
+        llist2.add(asian4);
+        llist2.add(black3);
+        llist2.add(latino);
+        llist2.add(white);
+        llist2.cfrSort();
+        String[] sorted4 = { "Black", "Latino", "White", "Asian" };
+        for (int i = 0; i < llist2.size(); i++) {
+            assertEquals(sorted4[i], llist2.getEntry(i).getRace());
+        }
+    }
 }

@@ -14,18 +14,11 @@ import java.util.Scanner;
 public class FileReader {
 
     /**
-     * FileReader Constructor
+     * This method scans a file and creates Demographic objects, a LinkedList of
+     * Demographic objects, and a list of states.
      * 
-     */
-    public FileReader() {
-    }
-
-
-    /**
-     * Helper method to read the file
-     * 
-     * @param file
-     *            is the file to read
+     * @param fileName
+     *            the file to read
      * @throws FileNotFoundException
      */
     public State[] readFile(String fileName) throws FileNotFoundException {
@@ -35,24 +28,28 @@ public class FileReader {
         int i = 0;
         while (file.hasNextLine() && i < 6) {
             line = file.nextLine();
-            String[] strArr = line.split(" *");
+            String[] strArr = line.split(",");
+            for (int j = 0; j < strArr.length; j++) {
+                if (strArr[j].equals("NA")) {
+                    strArr[j] = "-1";
+                }
+            }
             String state = strArr[0];
-            int whiteCases = Integer.valueOf(strArr[1]);
-            int blackCases = Integer.valueOf(strArr[2]);
-            int latinoCases = Integer.valueOf(strArr[3]);
-            int asianCases = Integer.valueOf(strArr[4]);
-            int otherCases = Integer.valueOf(strArr[5]);
-            int whiteDeaths = Integer.valueOf(strArr[6]);
-            int blackDeaths = Integer.valueOf(strArr[7]);
-            int latinoDeaths = Integer.valueOf(strArr[8]);
-            int asianDeaths = Integer.valueOf(strArr[9]);
-            int otherDeaths = Integer.valueOf(strArr[10]);
-
-            Demographic white = new Demographic("White", state, whiteCases,
+            String whiteCases = strArr[1];
+            String blackCases = strArr[2];
+            String latinoCases = strArr[3];
+            String asianCases = strArr[4];
+            String otherCases = strArr[5];
+            String whiteDeaths = strArr[6];
+            String blackDeaths = strArr[7];
+            String latinoDeaths = strArr[8];
+            String asianDeaths = strArr[9];
+            String otherDeaths = strArr[10];
+            Demographic white = new Demographic("white", state, whiteCases,
                 whiteDeaths);
             Demographic black = new Demographic("black", state, blackCases,
                 blackDeaths);
-            Demographic latino = new Demographic("latino", state, latinoCases,
+            Demographic latino = new Demographic("latinx", state, latinoCases,
                 latinoDeaths);
             Demographic asian = new Demographic("asian", state, asianCases,
                 asianDeaths);
@@ -67,7 +64,9 @@ public class FileReader {
             demographics.add(other);
             State homeState = new State(state, demographics);
             states[i] = homeState;
+            i++;
         }
+        file.close();
         return states;
     }
 }

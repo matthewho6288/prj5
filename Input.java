@@ -1,7 +1,6 @@
 package prj5;
 
 import java.io.FileNotFoundException;
-import java.text.DecimalFormat;
 
 /**
  * This class runs the Covid Visualizer project
@@ -29,28 +28,8 @@ public class Input {
                 "Cases_and_Deaths_by_race_CRDT_Sep2020.csv");
         }
         for (int i = 0; i < 6; i++) {
-            System.out.println(states[i].getName());
-            LinkedList<Demographic> demo = states[i].getPopulation();
-            String pattern = "#.#";
-            DecimalFormat decimalFormat = new DecimalFormat(pattern);
-            demo.alphaSort();
-            for (int j = 0; j < 5; j++) {
-                Demographic popAlpha = demo.getEntry(j);
-                String cfr = decimalFormat.format(popAlpha.cfr());
-                System.out.println(popAlpha.getRace() + ": " + popAlpha
-                    .getConfirmedCases() + " cases, " + cfr + "% CFR");
-            }
-            System.out.println("=====");
-            demo.cfrSort();
-            demo = states[i].getPopulation();
-            for (int j = 0; j < 5; j++) {
-                Demographic popCFR = demo.getEntry(j);
-                String cfr = decimalFormat.format(popCFR.cfr());
-
-                System.out.println(popCFR.getRace() + ": " + popCFR
-                    .getConfirmedCases() + " cases, " + cfr + "% CFR");
-            }
-            System.out.println("=====");
-        }
+            System.out.println(states[i].toString());
+        }  
+        new GUICovidWindow(states);
     }
 }

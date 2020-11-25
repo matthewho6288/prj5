@@ -51,19 +51,6 @@ public interface List<T> {
 
 
     /**
-     * Replaces an object at a specified position with another object.
-     * 
-     * @param givenPosition
-     *            an integer representing the position of the object that will
-     *            be replaced
-     * @param newEntry
-     *            a new object that will replace the original object at the
-     *            given position
-     */
-    public void replace(int givenPosition, T newEntry);
-
-
-    /**
      * This method obtains the object at the given position.
      * 
      * @param givenPosition

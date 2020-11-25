@@ -52,7 +52,7 @@ public class LinkedList<T> implements List<T> {
             firstNode = new Node<T>(newEntry);
         }
         else {
-            while (current.next != null) {
+            for (int i = 0; i < size() - 1; i++) {
                 current = current.next;
             }
             current.setNextNode(new Node<T>(newEntry));
@@ -170,23 +170,6 @@ public class LinkedList<T> implements List<T> {
 
 
     /**
-     * Replaces an object at a specified position with another object.
-     * 
-     * @param givenPosition
-     *            an integer representing the position of the object that will
-     *            be replaced
-     * @param newEntry
-     *            a new object that will replace the original object at the
-     *            given position
-     */
-    @Override
-    public void replace(int givenPosition, T newEntry) {
-        add(givenPosition, newEntry);
-        remove(givenPosition + 1);
-    }
-
-
-    /**
      * This method obtains the object at the given position.
      * 
      * @param givenPosition
@@ -195,21 +178,15 @@ public class LinkedList<T> implements List<T> {
      */
     @Override
     public T getEntry(int givenPosition) {
-        Node<T> current = firstNode;
-        int currentnewPosition = 0;
-        T data = null;
-        while (current != null) {
-            if (currentnewPosition == givenPosition) {
-                data = current.data;
-            }
-            currentnewPosition++;
-            current = current.next;
-        }
-        if (data == null) {
+        if (!inBounds(givenPosition)) {
             throw new IndexOutOfBoundsException(
                 "newPosition exceeds the size.");
         }
-        return data;
+        Node<T> current = firstNode;
+        for (int i = 0; i < givenPosition; i++) {
+            current = current.next;
+        }
+        return current.data;
     }
 
 
@@ -241,17 +218,23 @@ public class LinkedList<T> implements List<T> {
      */
     @Override
     public String toString() {
-        String str = "{";
-        Node<T> current = firstNode;
-        while (current != null) {
-            str += "" + current.data;
-            current = current.next;
-            if (current != null) {
-                str += ", ";
-            }
+        if (isEmpty()) {
+            return "{}";
         }
-        str += "}";
-        return str;
+        StringBuilder str = new StringBuilder();
+        Node<T> current = firstNode;
+        str.append("\n");
+        while (current != null) {
+            str.append(current.data);
+            if (current.next == null) {
+                str.append("\n=====");
+            }
+            else {
+                str.append("\n");
+            }
+            current = current.next;
+        }
+        return String.valueOf(str);
     }
 
 
@@ -261,7 +244,7 @@ public class LinkedList<T> implements List<T> {
      */
     @SuppressWarnings({ "unchecked" })
     public void cfrSort() {
-        if (firstNode.getData().getClass() == Demographic.class) {
+        if (!isEmpty() && firstNode.getData().getClass() == Demographic.class) {
             Iterator<Demographic> it = (Iterator<Demographic>)this.iterator();
             Iterator<Demographic> it2;
             LinkedList<Demographic> copy = new LinkedList<Demographic>();
@@ -303,7 +286,7 @@ public class LinkedList<T> implements List<T> {
     /**
      * This method reverses the order of a LinkedList.
      */
-    public void reverse() {
+    private void reverse() {
         T copy;
         int size = this.size() - 1;
         for (int i = size; i >= 0; i--) {
@@ -321,7 +304,7 @@ public class LinkedList<T> implements List<T> {
      */
     @SuppressWarnings({ "unchecked" })
     public void alphaSort() {
-        if (firstNode.getData().getClass() == Demographic.class) {
+        if (!isEmpty() && firstNode.getData().getClass() == Demographic.class) {
             Iterator<Demographic> it = (Iterator<Demographic>)this.iterator();
             Iterator<Demographic> it2;
             LinkedList<Demographic> copy = new LinkedList<Demographic>();

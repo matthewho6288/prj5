@@ -8,7 +8,7 @@ package prj5;
  */
 public class State {
     private String homeState;
-    private LinkedList<Demographic> ethnicity;
+    private LinkedList<Demographic> population;
 
     /**
      * This constructor creates a State object
@@ -21,7 +21,7 @@ public class State {
      */
     public State(String str, LinkedList<Demographic> list) {
         homeState = str;
-        ethnicity = list;
+        population = list;
     }
 
 
@@ -41,6 +41,23 @@ public class State {
      * @return the States demographics as a list
      */
     public LinkedList<Demographic> getPopulation() {
-        return ethnicity;
+        return population;
+    }
+
+
+    /**
+     * This method turns each of the states into a string representation.
+     * 
+     * @return a string of the state name and the demographics sorted in
+     *         alphabetical order and by CFR's
+     */
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        str.append(homeState);
+        population.alphaSort();
+        str.append(population.toString());
+        population.cfrSort();
+        str.append(population.toString());
+        return String.valueOf(str);
     }
 }

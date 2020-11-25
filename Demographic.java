@@ -1,5 +1,7 @@
 package prj5;
 
+import java.text.DecimalFormat;
+
 /**
  * This class constructs Demographic objects methods that obtain their field
  * data and compares objects to eachother.
@@ -110,5 +112,19 @@ public class Demographic {
                 && this.confirmedCases == group.confirmedCases
                 && this.deathToll == group.deathToll);
         }
+    }
+
+
+    /**
+     * This method creates a string containing the demographic's race, confirmed
+     * cases, and CFR.
+     */
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        String pattern = "#.#";
+        DecimalFormat decimalFormat = new DecimalFormat(pattern);
+        String cfr = decimalFormat.format(cfr());
+        str.append(race + ": " + confirmedCases + " cases, " + cfr + "% CFR");
+        return String.valueOf(str);
     }
 }

@@ -37,33 +37,31 @@ public class LinkedListTest extends TestCase {
      * This method test both add() methods.
      */
     public void testAdd() {
+        assertEquals("{}", llist.toString());
         llist.add(0, "egn");
         llist.remove(0);
         llist.add("entry1");
         assertEquals(1, llist.size());
         assertEquals("entry1", llist.getEntry(0));
-        assertEquals("{entry1}", llist.toString());
+        assertEquals("\n" + "entry1\n" + "=====", llist.toString());
         llist.add("entry2");
         assertEquals(2, llist.size());
         assertEquals("entry2", llist.getEntry(1));
-        assertEquals("{entry1, entry2}", llist.toString());
+        assertEquals("\n" + "entry1\n" + "entry2\n" + "=====", llist.toString());
         llist.add(0, "entry3");
         assertEquals(3, llist.size());
-        assertEquals("{entry3, entry1, entry2}", llist.toString());
+        assertEquals("\n" + "entry3\n" + "entry1\n" + "entry2\n" + "=====", llist
+            .toString());
         llist.add(1, "entry3");
-        assertEquals("{entry3, entry3, entry1, entry2}", llist.toString());
+        assertEquals("\n" + "entry3\n" + "entry3\n" + "entry1\n" + "entry2\n"
+            + "=====", llist.toString());
         llist.add("newEntry");
         assertEquals(5, llist.size());
-        assertEquals("{entry3, entry3, entry1, entry2, newEntry}", llist
-            .toString());
-        llist.add(2, "entry4");
-        assertEquals("{entry3, entry3, entry4, entry1, entry2, newEntry}", llist
-            .toString());
-        assertEquals(6, llist.size());
-        llist.add(5, "entry4");
-        assertEquals(
-            "{entry3, entry3, entry4, entry1, entry2, entry4, newEntry}", llist
-                .toString());
+        assertEquals("\n" + "entry3\n" + "entry3\n" + "entry1\n" + "entry2\n"
+            + "newEntry\n" + "=====", llist.toString());
+        llist.add(4, "entry4");
+        assertEquals("\n" + "entry3\n" + "entry3\n" + "entry1\n" + "entry2\n"
+            + "entry4\n" + "newEntry\n" + "=====", llist.toString());
         llist.clear();
         assertTrue(llist.isEmpty());
     }
@@ -114,7 +112,6 @@ public class LinkedListTest extends TestCase {
         }
         assertNotNull(exception);
         assertTrue(exception instanceof IndexOutOfBoundsException);
-
     }
 
 
@@ -130,18 +127,6 @@ public class LinkedListTest extends TestCase {
         assertEquals(2, llist.size());
         llist.remove(1);
         assertEquals(1, llist.size());
-    }
-
-
-    /**
-     * This tests the replace() method.
-     */
-    public void testReplace() {
-        llist.add("entry1");
-        llist.add("entry2");
-        llist.add("entry3");
-        llist.replace(1, "entry4");
-        assertEquals("{entry1, entry4, entry3}", llist.toString());
     }
 
 
@@ -219,14 +204,14 @@ public class LinkedListTest extends TestCase {
         assertEquals(0, llist.firstIndexOf("entry1"));
         it.remove();
         assertEquals(3, llist.size());
-        assertEquals("{entry2, entry3, entry4}", llist.toString());
+        assertEquals("\n" + "entry2\n" + "entry3\n" + "entry4\n" + "=====", llist
+            .toString());
         assertEquals("entry2", it.next());
         it.remove();
-        assertEquals("{entry3, entry4}", llist.toString());
+        assertEquals("\n" + "entry3\n" + "entry4\n" + "=====", llist.toString());
         assertEquals("entry3", it.next());
         it.remove();
-        assertEquals("{entry4}", llist.toString());
-
+        assertEquals("\n" + "entry4\n" + "=====", llist.toString());
     }
 
 
@@ -263,13 +248,16 @@ public class LinkedListTest extends TestCase {
      * This tests the sort methods and the reverse() method.
      */
     public void testSort() {
+        llist.cfrSort();
+        llist.alphaSort();
+        assertEquals("{}", llist.toString());
         llist.add("q");
         llist.add("3");
-        assertEquals("{q, 3}", llist.toString());
+        assertEquals("\n" + "q\n" + "3\n" + "=====", llist.toString());
         llist.cfrSort();
-        assertEquals("{q, 3}", llist.toString());
+        assertEquals("\n" + "q\n" + "3\n" + "=====", llist.toString());
         llist.alphaSort();
-        assertEquals("{q, 3}", llist.toString());
+        assertEquals("\n" + "q\n" + "3\n" + "=====", llist.toString());
         LinkedList<Demographic> llist2 = new LinkedList<Demographic>();
         Demographic white = new Demographic("White", "Virginia", "40000",
             "10000");
@@ -287,17 +275,16 @@ public class LinkedListTest extends TestCase {
         llist2.add(black);
         llist2.add(asian2);
         llist2.cfrSort();
-        String[] sorted = { "Black2", "Black", "Asian", "Asian", "White" };
-        for (int i = 0; i < llist2.size(); i++) {
-            assertEquals(sorted[i], llist2.getEntry(i).getRace());
-        }
+        assertEquals("\n" + "Black2: 40000 cases, 100% CFR\n"
+            + "Black: 40000 cases, 75% CFR\n" + "Asian: 40000 cases, 50% CFR\n"
+            + "Asian: 40000 cases, 25% CFR\n" + "White: 40000 cases, 25% CFR\n"
+            + "=====", llist2.toString());
         llist2.remove(0);
         llist2.remove(2);
-        String[] sorted2 = { "Asian", "Black", "White" };
         llist2.alphaSort();
-        for (int i = 0; i < llist2.size(); i++) {
-            assertEquals(sorted2[i], llist2.getEntry(i).getRace());
-        }
+        assertEquals("\n" + "Asian: 40000 cases, 50% CFR\n"
+            + "Black: 40000 cases, 75% CFR\n" + "White: 40000 cases, 25% CFR\n"
+            + "=====", llist2.toString());
         Demographic asian3 = new Demographic("Asian", "Virginia", "40000",
             "10000");
         Demographic black3 = new Demographic("Black", "Virginia", "40000",
@@ -309,21 +296,19 @@ public class LinkedListTest extends TestCase {
         llist2.add(latino);
         llist2.add(black3);
         llist2.add(asian3);
-
         llist2.cfrSort();
-        String[] sorted3 = { "Asian", "Black", "Latino", "White" };
-        for (int i = 0; i < llist2.size(); i++) {
-            assertEquals(sorted3[i], llist2.getEntry(i).getRace());
-        }
+        assertEquals("\n" + "Asian: 40000 cases, 25% CFR\n"
+            + "Black: 40000 cases, 25% CFR\n" + "Latino: 40000 cases, 25% CFR\n"
+            + "White: 40000 cases, 25% CFR\n" + "=====", llist2.toString());
         llist2.clear();
         llist2.add(asian3);
         llist2.add(black3);
         llist2.add(latino);
         llist2.add(white);
         llist2.cfrSort();
-        for (int i = 0; i < llist2.size(); i++) {
-            assertEquals(sorted3[i], llist2.getEntry(i).getRace());
-        }
+        assertEquals("\n" + "Asian: 40000 cases, 25% CFR\n"
+            + "Black: 40000 cases, 25% CFR\n" + "Latino: 40000 cases, 25% CFR\n"
+            + "White: 40000 cases, 25% CFR\n" + "=====", llist2.toString());
         llist2.clear();
         Demographic asian4 = new Demographic("Asian", "Virginia", "40000",
             "1000");
@@ -332,9 +317,8 @@ public class LinkedListTest extends TestCase {
         llist2.add(latino);
         llist2.add(white);
         llist2.cfrSort();
-        String[] sorted4 = { "Black", "Latino", "White", "Asian" };
-        for (int i = 0; i < llist2.size(); i++) {
-            assertEquals(sorted4[i], llist2.getEntry(i).getRace());
-        }
+        assertEquals("\n" + "Black: 40000 cases, 25% CFR\n"
+            + "Latino: 40000 cases, 25% CFR\n" + "White: 40000 cases, 25% CFR\n"
+            + "Asian: 40000 cases, 2.5% CFR\n" + "=====", llist2.toString());
     }
 }

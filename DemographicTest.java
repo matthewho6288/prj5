@@ -90,4 +90,12 @@ public class DemographicTest extends TestCase {
         assertFalse(asians.equals(nullDem));
         assertFalse(asians.equals(obj));
     }
+
+
+    /**
+     * This method tests the toString() method
+     */
+    public void testToString() {
+        assertEquals("Asian: 50000 cases, 40% CFR", asians.toString());
+    }
 }

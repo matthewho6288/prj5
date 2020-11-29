@@ -5,7 +5,7 @@ import student.TestCase;
 /**
  * This class contains methods that test methods in the Demographic class.
  * 
- * @author Matthew Ho (matthew00) & Baylor Lin (baylorl)
+ * @author Matthew Ho (matthew00)
  * @version (11.21.2020)
  *
  */
@@ -13,7 +13,7 @@ public class DemographicTest extends TestCase {
     private Demographic asians;
 
     /**
-     * This method sets up a Demographic Object
+     * This method sets up a Demographic Object.
      */
     public void setUp() {
         asians = new Demographic("Asian", "Virginia", "50000", "20000");
@@ -32,7 +32,6 @@ public class DemographicTest extends TestCase {
      * This method tests the getState() getter method.
      */
     public void testGetState() {
-
         assertEquals("Virginia", asians.getState());
     }
 
@@ -68,7 +67,7 @@ public class DemographicTest extends TestCase {
 
 
     /**
-     * This method tests the equals() method
+     * This method tests the equals() method.
      */
     public void testEquals() {
         Demographic asians2 = new Demographic("Asian", "Virginia", "50000",

@@ -3,10 +3,11 @@ package prj5;
 import java.text.DecimalFormat;
 
 /**
- * This class constructs Demographic objects methods that obtain their field
- * data and compares objects to eachother.
+ * This class constructs Demographic objects and methods that obtain their field
+ * data, compares objects to each other, and creates string representations of
+ * the objects.
  * 
- * @author Matthew Ho (matthew00) & Baylor Lin (baylorl)
+ * @author Matthew Ho (matthew00)
  * @version (11.21.2020)
  */
 public class Demographic {
@@ -16,16 +17,19 @@ public class Demographic {
     private String deathToll;
 
     /**
-     * This constructor creates a Demographic object.
+     * This constructor creates a Demographic object and sets its initial
+     * values.
      * 
      * @param ethinicity
-     *            The demographic's race
+     *            A string representing the demographic's race
      * @param location
-     *            The demographic's state
+     *            A string representing the demographic's state
      * @param cases
-     *            The demographic's number of COVID cases
+     *            A string representing the demographic's number of confirmed
+     *            cases
      * @param deaths
-     *            The demographic's number of COVID related deaths
+     *            A string representing the demographic's number of COVID
+     *            related deaths
      */
     public Demographic(
         String ethinicity,
@@ -50,7 +54,7 @@ public class Demographic {
 
 
     /**
-     * This method obtains the state where the demographic resides
+     * This method obtains the state where the demographic resides.
      * 
      * @return The demographic's state
      */
@@ -72,7 +76,7 @@ public class Demographic {
     /**
      * This method obtains the number of deaths caused by COVID.
      * 
-     * @return Number of COVID deaths
+     * @return The demographic's amount of COVID deaths
      */
     public String getDeathToll() {
         return deathToll;
@@ -81,10 +85,12 @@ public class Demographic {
 
     /**
      * This method calculates the ratio between the number of deaths caused by
-     * COVID
-     * and the number of confirmed COVID cases.
+     * COVID and the number of confirmed COVID cases. The CFR is only calculated
+     * if the string representing the number of confirmed COVID cases or the
+     * number of COVID deaths is not -1".
      * 
-     * @return CFR ratio as percentage
+     * @return CFR ratio as percentage, -1 if the confirmedCases or deathToll is
+     *         "-1"
      */
     public double cfr() {
         if (confirmedCases.equals("-1") || deathToll.equals("-1")) {
@@ -95,13 +101,14 @@ public class Demographic {
 
 
     /**
-     * This method compares "this" Demographic to another object
+     * This method compares "this" Demographic to another object.
      * 
      * @param obj
      *            object that "this" is being compared to
      * 
      * @return true if all traits of both Demographic objects are the same
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
@@ -117,7 +124,10 @@ public class Demographic {
 
     /**
      * This method creates a string containing the demographic's race, confirmed
-     * cases, and CFR.
+     * cases, and CFR. The format of the string is returned as: Ex. "white: 9000
+     * cases, 5.4% CFR"
+     * 
+     * @return a string representing the Demographic object.
      */
     public String toString() {
         StringBuilder str = new StringBuilder();

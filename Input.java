@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
  */
 public class Input {
     /**
-     * This methods runs methods for the Covid Visualizer and prints lines of
+     * This methods runs methods for the COVID Visualizer and prints lines of
      * information to the console.
      * 
      * @param args

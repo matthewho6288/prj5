@@ -17,7 +17,7 @@ public class LinkedList<T> implements List<T> {
     private int numberOfEntries;
 
     /**
-     * This creates a LinkedList object and sets its initial fields.
+     * This method creates a LinkedList object and sets its initial fields.
      */
     public LinkedList() {
         firstNode = null;
@@ -26,7 +26,7 @@ public class LinkedList<T> implements List<T> {
 
 
     /**
-     * This obtains the amount of elements in the list.
+     * This method obtains the amount of elements in the list.
      * 
      * @return the number of newEntryects in the list.
      */
@@ -62,7 +62,7 @@ public class LinkedList<T> implements List<T> {
 
 
     /**
-     * This method adds an object a specific position.
+     * This method adds an object at a specific position.
      * 
      * @param newPosition
      *            an integer representing a specified position of where to add
@@ -104,11 +104,11 @@ public class LinkedList<T> implements List<T> {
 
 
     /**
-     * Gets the last time the given object is in the list
+     * This method gets the first time the given object is in the list.
      *
      * @param listEntry
      *            the object to look for
-     * @return the last position of it. -1 If it is not in the list
+     * @return the first position of it. -1 If it is not in the list
      */
     public int firstIndexOf(T listEntry) {
         Node<T> current = firstNode;
@@ -157,7 +157,7 @@ public class LinkedList<T> implements List<T> {
 
 
     /**
-     * This method determines if index is within the bounds of the list.
+     * This method determines if an index is within the bounds of the list.
      * 
      * @param index
      *            an integer representing the index
@@ -193,7 +193,7 @@ public class LinkedList<T> implements List<T> {
     /**
      * The method determines if the list is empty.
      * 
-     * @return true if the list has no elements, false otherwise
+     * @return true if the list has no elements, false if it is not
      */
     @Override
     public boolean isEmpty() {
@@ -287,15 +287,15 @@ public class LinkedList<T> implements List<T> {
      * This method reverses the order of a LinkedList.
      */
     private void reverse() {
-        T copy;
-        int size = this.size() - 1;
-        for (int i = size; i >= 0; i--) {
-            copy = this.getEntry(i);
-            this.add(copy);
+        Node<T> current = firstNode;
+        Node<T> previous = null;
+        while (current != null) {
+            Node<T> TempNode = current.next;
+            current.next = previous;
+            previous = current;
+            current = TempNode;
         }
-        for (int i = 0; i <= size; i++) {
-            this.remove(0);
-        }
+        firstNode = previous;
     }
 
 
@@ -363,7 +363,8 @@ public class LinkedList<T> implements List<T> {
         private boolean wasNextCalled = false;
 
         /**
-         * This creates a LinkedListIterator object and sets the head field.
+         * This constructor creates a LinkedListIterator object and sets the
+         * head field.
          */
         public LinkedListIterator() {
             nextNode = head;
@@ -371,7 +372,7 @@ public class LinkedList<T> implements List<T> {
 
 
         /**
-         * This method makes sure that the iterator has another object to call
+         * This method makes sure that the iterator has another object to call.
          * next.
          * 
          * @return true if the iterator has more items to iterate through.
@@ -383,9 +384,9 @@ public class LinkedList<T> implements List<T> {
 
 
         /**
-         * This method iterates the next object
+         * This method iterates to the next object.
          * 
-         * @return the object the iterate traverses to.
+         * @return the object the iterate traverses to
          */
         @Override
         public T next() {
@@ -403,7 +404,7 @@ public class LinkedList<T> implements List<T> {
 
 
         /**
-         * This method removes an item from the LinkedList
+         * This method removes an item from the LinkedList.
          * 
          * @throws IllegalStateException
          */
@@ -422,7 +423,7 @@ public class LinkedList<T> implements List<T> {
 
 
     /**
-     * This inner class provides the constructor and methods for Node objects
+     * This inner class provides the constructor and methods for Node objects.
      * 
      * @author Matthew Ho (matthew00)
      * @version (11.20.2020)
@@ -435,9 +436,10 @@ public class LinkedList<T> implements List<T> {
         private Node<E> next;
 
         /**
-         * This creates a node and sets up its initial fields
+         * This constructor creates a node and sets up its initial fields
          * 
          * @param data
+         *            the node's data field
          */
         public Node(E data) {
             this.data = data;
@@ -446,7 +448,7 @@ public class LinkedList<T> implements List<T> {
 
 
         /**
-         * This obtains the next node of "this" node.
+         * This method obtains the next node of "this" node.
          * 
          * @return the next node
          */
@@ -456,9 +458,9 @@ public class LinkedList<T> implements List<T> {
 
 
         /**
-         * This obtains the data contained within the node.
+         * This method obtains the data contained within the node.
          * 
-         * @return
+         * @return the node's data
          */
         public E getData() {
             return data;
@@ -466,7 +468,7 @@ public class LinkedList<T> implements List<T> {
 
 
         /**
-         * This sets the next node of "this" node.
+         * This method sets the next node of "this" node.
          * 
          * @param node
          *            the next node

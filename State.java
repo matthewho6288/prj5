@@ -3,42 +3,42 @@ package prj5;
 /**
  * This class creates state objects and methods.
  * 
- * @author Matthew Ho (matthew00)
+ * @author Matthew Ho (matthew00) & Baylor Lin (baylorl)
  * @version (11.20.2020)
  */
 public class State {
-    private String homeState;
+    private String stateName;
     private LinkedList<Demographic> population;
 
     /**
-     * This constructor creates a State object
+     * This constructor creates a State object and initiates its fields.
      *
-     * @param str
-     *            The States name
+     * @param name
+     *            the name of the state
      *
-     * @param list
-     *            A linkedList of Demographic
+     * @param populus
+     *            a LinkedList of Demographic objects in the state.
      */
-    public State(String str, LinkedList<Demographic> list) {
-        homeState = str;
-        population = list;
+    public State(String name, LinkedList<Demographic> populus) {
+        stateName = name;
+        population = populus;
     }
 
 
     /**
-     * This method obtains the States name
+     * This method obtains the State's name.
      *
-     * @return the States name as a string
+     * @return a string representing the state's name
      */
     public String getName() {
-        return homeState;
+        return stateName;
     }
 
 
     /**
-     * This method obtains the States demographics
+     * This method obtains all of the demographics belonging to a state.
      *
-     * @return the States demographics as a list
+     * @return a LinkedList containing each of the demographics within the state
      */
     public LinkedList<Demographic> getPopulation() {
         return population;
@@ -53,7 +53,7 @@ public class State {
      */
     public String toString() {
         StringBuilder str = new StringBuilder();
-        str.append(homeState);
+        str.append(stateName);
         population.alphaSort();
         str.append(population.toString());
         population.cfrSort();

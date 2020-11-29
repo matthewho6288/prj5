@@ -14,7 +14,7 @@ public class StateTest extends TestCase {
     private LinkedList<Demographic> demoList;
 
     /**
-     * This method sets up a State Object
+     * This method sets up a State object.
      */
     public void setUp() {
         demoList = new LinkedList<Demographic>();
@@ -23,7 +23,7 @@ public class StateTest extends TestCase {
 
 
     /**
-     * Tests the States getName() method
+     * This method test the getName() getter method.
      */
     public void testGetName() {
         assertEquals(state.getName(), "Virginia");
@@ -31,9 +31,9 @@ public class StateTest extends TestCase {
 
 
     /**
-     * Tests the State's getPopulation() method
+     * This tests the getPopulation() getter method.
      */
-    public void testGetPopultation() {
+    public void testGetPopulation() {
         Demographic demo = new Demographic("asian", "Virginia", "12", "13");
         demoList.add(demo);
         assertEquals("asian", state.getPopulation().getEntry(0).getRace());
@@ -41,7 +41,7 @@ public class StateTest extends TestCase {
 
 
     /**
-     * Tests the toString() method
+     * This method tests the toString() method.
      */
     public void testToString() {
         Demographic white = new Demographic("White", "Virginia", "40000",

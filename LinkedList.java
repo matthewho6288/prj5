@@ -290,10 +290,10 @@ public class LinkedList<T> implements List<T> {
         Node<T> current = firstNode;
         Node<T> previous = null;
         while (current != null) {
-            Node<T> TempNode = current.next;
+            Node<T> tempNode = current.next;
             current.next = previous;
             previous = current;
-            current = TempNode;
+            current = tempNode;
         }
         firstNode = previous;
     }

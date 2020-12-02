@@ -184,9 +184,18 @@ public class GUICovidWindow {
         txt.setX((window.getGraphPanelWidth() / 2) - (txtWidth / 2));
         LinkedList<Demographic> pop = state.getPopulation();
         String pattern = "#.#";
+        int barFactor = 50;
         for (int i = 0; i < 5; i++) {
-            int barHeight = (int)(pop.getEntry(i).cfr() * window
-                .getGraphPanelHeight() * 0.075);
+            if (pop.getEntry(i).cfr() >= 10) {
+                barFactor = 20;
+            }
+            if (pop.getEntry(i).cfr() >= 20) {
+                barFactor = 5;
+                break;
+            }
+        }
+        for (int i = 0; i < 5; i++) {
+            int barHeight = (int)(pop.getEntry(i).cfr() * barFactor);
             int barWidth = 30;
             int marker = (int)(window.getGraphPanelWidth() / 6d);
             int barX = marker * (i + 1);

@@ -35,7 +35,7 @@ public class FileReader {
         Scanner file = new Scanner(new File(fileName));
         String line = file.nextLine();
         int i = 0;
-        while (file.hasNextLine() && i < MAX_STATES) {
+        while (file.hasNextLine()) {
             line = file.nextLine();
             strArr = line.split(",");
             for (int j = 0; j < strArr.length; j++) {

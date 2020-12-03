@@ -323,8 +323,7 @@ public class LinkedList<T> implements List<T> {
                 int i = 0;
                 while (it2.hasNext()) {
                     Demographic sort = it2.next();
-                    if (insert.getRace().toCharArray()[0] < sort.getRace()
-                        .toCharArray()[0]) {
+                    if (insert.getRace().compareTo(sort.getRace()) < 0) {
                         this.add(i, (T)insert);
                         break;
                     }

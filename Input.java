@@ -27,9 +27,6 @@ public class Input {
             states = reader.readFile(
             "Cases_and_Deaths_by_race_CRDT_Sep2020.csv");
         }
-        for (int i = 0; i < 6; i++) {
-            System.out.println(states[i].toString());
-        }  
         new GUICovidWindow(states);
     }
 }
